@@ -1,3 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html.light {
+    /* Estilos para o modo light */
+    background-color: #333333;
+    color: #000000;
+  }
+
+  html.dark {
+    /* Estilos para o modo dark */
+    background-color: #333333;
+    color: #ffffff;
+  }
+}
