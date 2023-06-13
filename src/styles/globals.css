@@ -69,11 +69,33 @@
   .h4 {
     @apply font-primary text-base font-bold md:text-lg;
   }
+  .order-details-enter {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  
+  .order-details-enter-active {
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
+  .order-details-exit {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  .order-details-exit-active {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 300ms, transform 300ms;
+  }
+  
 
   body,
   .p {
     @apply font-primary text-sm md:text-base;
-    background:conic-gradient(at center top, rgb(14, 165, 233), rgb(254, 215, 170), rgb(202, 138, 4));
+    background:rgb(255, 221, 170);
   }
   /* #endregion  /**======== Typography =========== */
 
