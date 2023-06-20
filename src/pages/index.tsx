@@ -25,7 +25,7 @@ const Index = () => {
       <Seo />
       <div className="flex flex-col items-center justify-center h-screen">
         <h1 className="text-4xl font-bold mb-8">Seja Bem-vindo!</h1>
-        <Link className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded" id="cardapio" href={'/cardapio'}>Fazer Pedido</Link>
+        <Link className="bg-gradient-to-r from-blue-500 to-purple-500 font-bold py-2 px-4 rounded-full" id="cardapio" href={'/cardapio'}>Fazer Pedido</Link>
       </div>
     </Layout>
   );

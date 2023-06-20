@@ -5,7 +5,7 @@
 @layer base {
   html.light {
     /* Estilos para o modo light */
-    background-color: #333333;
+    background-color: #f5f5f5;
     color: #000000;
   }
 
