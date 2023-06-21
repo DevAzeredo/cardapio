@@ -1,6 +1,6 @@
-import { CardapioCardProps } from './interfaces/CardapioCard.interface';
+import { CardapioCartaoProps } from './interfaces/CardapioCartao.interface';
 
-export const CardapioCard: React.FC<CardapioCardProps> = ({
+export const CardapioCartao: React.FC<CardapioCartaoProps> = ({
   item,
   quantidade,
   onIncrementar,

@@ -4,7 +4,7 @@ export interface ItemSelecionado {
   quantidade: number;
 }
 
-export interface CartFooterProps {
+export interface CarrinhoRodapeProps {
   itensSelecionados: ItemSelecionado[];
   onClick: () => void;
 }

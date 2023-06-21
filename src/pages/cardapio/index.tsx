@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { ItemSelecionado } from '../../components/carrinho/interfaces/Cart.interface';
-import { CardapioCard } from '../../components/card/CardapioCard';
-import Carrinho from '../../components/carrinho/CartFooter';
-import CartPage from '../../components/carrinho/CartPage';
+import { ItemSelecionado } from '../../components/carrinho/interfaces/Carrinho.interface';
+import { CardapioCartao } from '../../components/card/CardapioCartao';
+import Carrinho from '../../components/carrinho/CardapioRodape';
+import CardapioPagina from '../../components/carrinho/CardapioPagina';
 import { useRouter } from 'next/router';
 
 export default function Page() {
@@ -20,7 +20,7 @@ export default function Page() {
     };
   }, []);
 
-  const handleIncrementar = (AdicionadoId: number, AdicionadoValor: number) => {
+  const Incrementar = (AdicionadoId: number, AdicionadoValor: number) => {
     const itemSelecionado = itensSelecionados.find((item) => item.id === AdicionadoId);
 
     if (itemSelecionado) {
@@ -36,7 +36,7 @@ export default function Page() {
   };
 
 
-  const handleDecrementar = (itemId: number) => {
+  const Decrementar = (itemId: number) => {
     const itemSelecionado = itensSelecionados.find((item) => item.id === itemId);
 
     if (itemSelecionado && itemSelecionado.quantidade > 0) {
@@ -74,7 +74,7 @@ export default function Page() {
     },
   ];
 
-  const handleRevisarPedido = () => {
+  const RevisarPedido = () => {
     setExibirPopup(true);
   };
 
@@ -87,11 +87,11 @@ export default function Page() {
   return (
     <div>
       {exibirPopup && (
-        <CartPage
+        <CardapioPagina
           itensSelecionados={itensSelecionados}
           cardapio={cardapio}
-          handleIncrementar={handleIncrementar}
-          handleDecrementar={handleDecrementar}
+          Incrementar={Incrementar}
+          Decrementar={Decrementar}
           setExibir={setExibirPopup}
         />
       )}
@@ -99,17 +99,17 @@ export default function Page() {
         <h1 className="text-4xl font-bold text-center mb-8">Cardápio</h1>
         <div className="max-w-4xl w-full flex flex-col justify-center items-center">
           {cardapio.map((item) => (
-            <CardapioCard
+            <CardapioCartao
               key={item.id}
               item={item}
               quantidade={itensSelecionados.find((selecionado) => selecionado.id === item.id)?.quantidade || 0}
-              onIncrementar={() => handleIncrementar(item.id, item.valor)}
-              onDecrementar={() => handleDecrementar(item.id)}
+              onIncrementar={() => Incrementar(item.id, item.valor)}
+              onDecrementar={() => Decrementar(item.id)}
             />
           ))}
         </div>
       </div>
-      <Carrinho itensSelecionados={itensSelecionados} onClick={handleRevisarPedido} />
+      <Carrinho itensSelecionados={itensSelecionados} onClick={RevisarPedido} />
     </div>
   );
 }

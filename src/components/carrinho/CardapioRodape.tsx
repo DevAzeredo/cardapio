@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { CartFooterProps } from './interfaces/Cart.interface';
+import { CarrinhoRodapeProps } from './interfaces/Carrinho.interface';
 
-export const Carrinho: React.FC<CartFooterProps> = ({ itensSelecionados, onClick }) => {
+export const Carrinho: React.FC<CarrinhoRodapeProps> = ({ itensSelecionados, onClick }) => {
     const [valorTotal, setValorTotal] = useState(0);
     const [botaoTexto, setBotaoTexto] = useState('Abrir Carrinho');
 
