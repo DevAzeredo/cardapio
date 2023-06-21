@@ -35,16 +35,20 @@ export default function Page() {
     }
   };
 
-
   const Decrementar = (itemId: number) => {
     const itemSelecionado = itensSelecionados.find((item) => item.id === itemId);
 
-    if (itemSelecionado && itemSelecionado.quantidade > 0) {
-      const novoItemSelecionado = { ...itemSelecionado, quantidade: itemSelecionado.quantidade - 1 };
-      const novosItensSelecionados = itensSelecionados.map((item) =>
-        item.id === itemId ? novoItemSelecionado : item
-      );
-      setItensSelecionados(novosItensSelecionados);
+    if (itemSelecionado) {
+      if (itemSelecionado.quantidade > 1) {
+        const novoItemSelecionado = { ...itemSelecionado, quantidade: itemSelecionado.quantidade - 1 };
+        const novosItensSelecionados = itensSelecionados.map((item) =>
+          item.id === itemId ? novoItemSelecionado : item
+        );
+        setItensSelecionados(novosItensSelecionados);
+      } else {
+        const novosItensSelecionados = itensSelecionados.filter((item) => item.id !== itemId);
+        setItensSelecionados(novosItensSelecionados);
+      }
     }
   };
 
