@@ -1,33 +1,35 @@
-import { Order } from '@/components/cozinha/interfaces/Order.interface';
+import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
 import React from 'react';
 
 interface PedidoItemProps {
-  order: Order;
+  pedido: Pedido;
   abrirDetalhesPedido: (order: any) => void;
-  moverParaProximoStatus: (orderId: String) => void;
+  mostrarValor?: boolean;
+  moverParaProximoStatus?: (orderId: String) => void;
 }
 
 const PedidoItem: React.FC<PedidoItemProps> = ({
-  order,
+  pedido,
   abrirDetalhesPedido,
   moverParaProximoStatus,
+  mostrarValor,
 }) => {
   let statusText: string;
-  if (order.status === 1) {
-    statusText = 'Pendente';
-  } else if (order.status === 2) {
-    statusText = 'Em Preparo';
-  } else if (order.status === 3) {
-    statusText = 'Pronto';
+  if (pedido.status === 1) {
+    statusText = 'Preparar';
+  } else if (pedido.status === 2) {
+    statusText = 'Concluir';
+  } else if (pedido.status === 3) {
+    statusText = 'Enviar';
   } else {
     statusText = 'Enviado';
   }
   return (
-    <li key={order.id} className="border p-2 mb-2 flex flex-col">
+    <li key={pedido.id} className="border p-2 mb-2 flex flex-col">
       <div>
-        <p className="font-semibold">{order.number}</p>
-        <p>Itens: {order.items.map((item) => item.nome).join(', ')}</p>
-        {order.specialInstructions && (
+        <p className="font-semibold">{pedido.numero}</p>
+        <p>Itens: {pedido.items.map((item) => item.nome).join(', ')}</p>
+        {pedido.instrucoesEspeciais && (
           <div className="flex items-center mt-2">
             <svg
               className="w-4 h-4 text-red-500 mr-1"
@@ -47,16 +49,23 @@ const PedidoItem: React.FC<PedidoItemProps> = ({
       <div className="flex items-center space-x-2">
         <button
           className="bg-blue-500 mt-2 hover:bg-blue-600 text-white font-semibold py-3 px-2 rounded mb-2"
-          onClick={() => abrirDetalhesPedido(order)}
+          onClick={() => abrirDetalhesPedido(pedido)}
         >
           Detalhes
         </button>
-        <button
-          className="bg-blue-500 hover:bg-green-600 text-white font-semibold py-3 px-2 rounded"
-          onClick={() => moverParaProximoStatus(order.id)}
-        >
-          {statusText}
-        </button>
+        {moverParaProximoStatus && (
+          <button
+            className="bg-blue-500 hover:bg-green-600 text-white font-semibold py-3 px-2 rounded"
+            onClick={() => moverParaProximoStatus(pedido.id)}
+          >
+            {statusText}
+          </button>)
+        }
+        {mostrarValor && (
+          <span className="text-lg font-semibold mr-2">
+            R${pedido.items.reduce((total, item) => total + item.valor, 0).toFixed(2)}
+          </span>)
+        }
       </div>
     </li>
   );

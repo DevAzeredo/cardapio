@@ -1,9 +1,9 @@
 import { CardapioItem } from "@/components/card/interfaces/CardapioCartao.interface";
 
-export interface Order {
+export interface Pedido {
   id: string;
-  number: string;
+  numero: string;
   items: CardapioItem[];
-  status: 1 | 2 | 3;
-  specialInstructions: string;
+  status: 1 | 2 | 3 | 4;
+  instrucoesEspeciais: string;
 }

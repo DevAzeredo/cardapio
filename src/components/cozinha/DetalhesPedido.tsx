@@ -1,13 +1,13 @@
 import { CardapioCartaoDetalhes } from '@/components/card/CardapioDetalhesCartao';
-import { Order } from '@/components/cozinha/interfaces/Order.interface';
+import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
 import React from 'react';
 
 interface DetalhesPedidoProps {
-  selectedOrder: Order;
+  pedidoSelecionado: Pedido;
   fecharDetalhesPedido: () => void;
 }
 
-const getStatusText = (status: Order['status']): string => {
+const getStatusText = (status: Pedido['status']): string => {
   switch (status) {
     case 1:
       return 'Pendente';
@@ -21,20 +21,20 @@ const getStatusText = (status: Order['status']): string => {
 };
 
 const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({
-  selectedOrder,
+  pedidoSelecionado,
   fecharDetalhesPedido,
 }) => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-8 max-w-md mx-auto rounded">
         <div className="flex flex-col h-64 w-96 overflow-y-scroll">
-          {selectedOrder.items.map((item, index) => (
+          {pedidoSelecionado.items.map((item, index) => (
             <div key={item.id} className="mb-2 w-full">
               <div className="h-50">
                 <CardapioCartaoDetalhes
                   key={item.id}
                   item={item}
-                  observacoes={selectedOrder.specialInstructions}
+                  observacoes={pedidoSelecionado.instrucoesEspeciais}
                 />
               </div>
             </div>
@@ -42,10 +42,10 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({
         </div>
         <h3 className="text-lg font-semibold mb-2">Detalhes do Pedido</h3>
         <p className="mb-2">
-          <span className="font-semibold">Número:</span> {selectedOrder.number}
+          <span className="font-semibold">Número:</span> {pedidoSelecionado.numero}
         </p>
         <p className="mb-2">
-          <span className="font-semibold">Status: </span> {getStatusText(selectedOrder.status)}
+          <span className="font-semibold">Status: </span> {getStatusText(pedidoSelecionado.status)}
         </p>
         <div className="mt-4">
           <button
