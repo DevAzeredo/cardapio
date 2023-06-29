@@ -113,7 +113,8 @@ export default function Page() {
           ))}
         </div>
       </div>
-      <Carrinho itensSelecionados={itensSelecionados} onClick={RevisarPedido} />
+      {!exibirPopup && (
+        <Carrinho itensSelecionados={itensSelecionados} onClick={RevisarPedido} />)}
     </div>
   );
 }

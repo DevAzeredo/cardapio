@@ -27,7 +27,7 @@ const PedidoItem: React.FC<PedidoItemProps> = ({
   return (
     <li key={pedido.id} className="border p-2 mb-2 flex flex-col">
       <div>
-        <p className="font-semibold">{pedido.numero}</p>
+        <p>{pedido.numero}</p>
         <p>Itens: {pedido.items.map((item) => item.nome).join(', ')}</p>
         {pedido.instrucoesEspeciais && (
           <div className="flex items-center mt-2">
@@ -46,23 +46,23 @@ const PedidoItem: React.FC<PedidoItemProps> = ({
           </div>
         )}
       </div>
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center">
         <button
-          className="bg-blue-500 mt-2 hover:bg-blue-600 text-white font-semibold py-3 px-2 rounded mb-2"
+          className="mt-2 py-1 px-2 rounded mb-2"
           onClick={() => abrirDetalhesPedido(pedido)}
         >
           Detalhes
         </button>
         {moverParaProximoStatus && (
           <button
-            className="bg-blue-500 hover:bg-green-600 text-white font-semibold py-3 px-2 rounded"
+            className=" font-semibold py-1 px-2 rounded ml-2"
             onClick={() => moverParaProximoStatus(pedido.id)}
           >
             {statusText}
           </button>)
         }
         {mostrarValor && (
-          <span className="text-lg font-semibold mr-2">
+          <span className="text-lg font-semibold ml-auto">
             R${pedido.items.reduce((total, item) => total + item.valor, 0).toFixed(2)}
           </span>)
         }

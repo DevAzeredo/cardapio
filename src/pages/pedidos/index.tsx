@@ -2,6 +2,7 @@ import { CardapioCartaoDetalhes } from '@/components/card/CardapioDetalhesCartao
 import DetalhesPedido from '@/components/cozinha/DetalhesPedido';
 import PedidoItem from '@/components/cozinha/PedidoItem';
 import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
+import Link from 'next/link';
 import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
 
@@ -104,7 +105,7 @@ const VisaoGeralPedidos = () => {
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="container mx-auto p-4 flex flex-col items-center justify-center h-screen">
-        <h2 className="text-2xl font-bold mb-4">Visão Geral de Pedidos</h2>
+        <h2 className="text-2xl font-bold mb-4">Pedidos</h2>
 
         {orders.length > 0 ? (
           <div>
@@ -119,12 +120,11 @@ const VisaoGeralPedidos = () => {
                   />
                 ))}
               </ul>
-              <button
-                className="mx-auto flex bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4"
-                onClick={realizarNovoPedido}
-              >
-                Realizar Novo Pedido
-              </button>
+              <div className="flex justify-center">
+                <Link className="mt-2 bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded mb-4" id="cardapio" href={'/cardapio'}>
+                  Novo Pedido
+                </Link>
+              </div>
             </div>
           </div>
         ) : (
@@ -159,13 +159,12 @@ const VisaoGeralPedidos = () => {
           </div>
         </div>
         <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-4"
+          className=" font-bold py-2 px-4 rounded mt-4"
           onClick={realizarPagamento}
         >
           Realizar Pagamento
         </button>
       </div>
-
       {pedidoSelecionado && mostrarDetalhes && (
         <DetalhesPedido pedidoSelecionado={pedidoSelecionado} fecharDetalhesPedido={fecharDetalhesPedido} />
       )}

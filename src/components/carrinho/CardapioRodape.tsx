@@ -3,7 +3,6 @@ import { CarrinhoRodapeProps } from './interfaces/Carrinho.interface';
 
 export const Carrinho: React.FC<CarrinhoRodapeProps> = ({ itensSelecionados, onClick }) => {
     const [valorTotal, setValorTotal] = useState(0);
-    const [botaoTexto, setBotaoTexto] = useState('Abrir Carrinho');
 
     useEffect(() => {
         calcularValorTotal();
@@ -24,7 +23,7 @@ export const Carrinho: React.FC<CarrinhoRodapeProps> = ({ itensSelecionados, onC
             <div className="flex items-center">
                 <div className="mr-2">Total: R${valorTotal.toFixed(2)}</div>
                 <button className="bg-gray-200 text-gray-700 py-1 px-2 rounded" onClick={onClick}>
-                    {botaoTexto}
+                    Abrir Carrinho
                 </button>
             </div>
         </div>
