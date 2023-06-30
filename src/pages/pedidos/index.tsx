@@ -140,36 +140,37 @@ const VisaoGeralPedidos = () => {
 
         <div className="flex items-center flex-col">
           <div><span>Gorjeta</span></div>
-          <div className="flex items-center w-96">
+          <div className="flex justify-center w-72 mx-auto">
             <input
               type="range"
               min={0}
               max={100}
               value={gorjeta}
               onChange={(e) => setGorjeta(Number(e.target.value))}
-              className="w-full"
+              className="w-full ml-6"
             />
             <div className="w-1/4">
               <span className="text-gray-600">{gorjeta}%</span>
             </div>
-            <div className="w-1/1 ml-auto">
-              <input
-                type="text"
-                value={`R$ ${calcularTotal().toFixed(2)}`}
-                className="py-2 px-2 border border-gray-400 rounded w-full"
-                disabled
-              />
-            </div>
           </div>
+
         </div>
-
-        <button
-          className="font-bold py-2 px-4 rounded mt-4"
-          onClick={realizarPagamento}
-        >
-          Pagar
-        </button>
-
+        <div className='flex justify-center'>
+          <div className="w-1/2">
+            <input
+              type="text"
+              value={`R$ ${calcularTotal().toFixed(2)}`}
+              className="py-2 px-2 border border-gray-400 rounded w-full"
+              disabled
+            />
+          </div>
+          <button
+            className="font-bold py-2 px-4 rounded ml-2"
+            onClick={realizarPagamento}
+          >
+            Pagar
+          </button>
+        </div>
         {mostrarDetalhes && pedidoSelecionado && (
           <DetalhesPedido pedidoSelecionado={pedidoSelecionado} fecharDetalhesPedido={fecharDetalhesPedido} />
         )}
