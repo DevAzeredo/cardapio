@@ -1,10 +1,9 @@
-import { CardapioCartaoDetalhes } from '@/components/card/CardapioDetalhesCartao';
-import DetalhesPedido from '@/components/cozinha/DetalhesPedido';
-import PedidoItem from '@/components/cozinha/PedidoItem';
-import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
-import Link from 'next/link';
 import { useState } from 'react';
 import CurrencyInput from 'react-currency-input-field';
+import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
+import PedidoItem from '@/components/cozinha/PedidoItem';
+import DetalhesPedido from '@/components/cozinha/DetalhesPedido';
+import Link from 'next/link';
 
 const VisaoGeralPedidos = () => {
   const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(null);
@@ -85,22 +84,26 @@ const VisaoGeralPedidos = () => {
       instrucoesEspeciais: 'Sem cebola',
     },
   ]);
+  const [gorjeta, setGorjeta] = useState<number>(0);
+  const [total, setTotal] = useState<number>(() => {
+    const initialValue = 0;
+    const totalValor = orders.reduce((accumulator, order) => {
+      return accumulator + order.items.reduce((itemAccumulator, item) => {
+        return itemAccumulator + item.valor;
+      }, 0);
+    }, initialValue);
+    return totalValor;
+  });
+
+  const calcularTotal = () => {
+    const gorjetaValor = total * (gorjeta / 100);
+    return total + gorjetaValor;
+  };
+
   const realizarPagamento = () => {
     // Lógica para fazer o request ao servidor e obter o QR Code e os dados da transação
   };
 
-
-  function realizarNovoPedido(): void {
-    throw new Error('Function not implemented.');
-  }
-
-  function setValorSelecionado(arg0: number): void {
-    throw new Error('Function not implemented.');
-  }
-
-  function handleValorChange(): void {
-    throw new Error('Function not implemented.');
-  }
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -121,7 +124,11 @@ const VisaoGeralPedidos = () => {
                 ))}
               </ul>
               <div className="flex justify-center">
-                <Link className="mt-2 bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded mb-4" id="cardapio" href={'/cardapio'}>
+                <Link
+                  className="mt-2 bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded mb-4"
+                  id="cardapio"
+                  href={'/cardapio'}
+                >
                   Novo Pedido
                 </Link>
               </div>
@@ -138,36 +145,35 @@ const VisaoGeralPedidos = () => {
               type="range"
               min={0}
               max={100}
-              value={120}
-              onChange={(e) => setValorSelecionado(Number(e.target.value))}
+              value={gorjeta}
+              onChange={(e) => setGorjeta(Number(e.target.value))}
               className="w-full"
             />
             <div className="w-1/4">
-              <span className="text-gray-600">{102}%</span>
+              <span className="text-gray-600">{gorjeta}%</span>
             </div>
             <div className="w-1/1 ml-auto">
-              <CurrencyInput
-                prefix="R$"
-                allowDecimals={true}
-                decimalSeparator=","
-                groupSeparator="."
-                value={100}
-                onValueChange={handleValorChange}
+              <input
+                type="text"
+                value={`R$ ${calcularTotal().toFixed(2)}`}
                 className="py-2 px-2 border border-gray-400 rounded w-full"
+                disabled
               />
             </div>
           </div>
         </div>
+
         <button
-          className=" font-bold py-2 px-4 rounded mt-4"
+          className="font-bold py-2 px-4 rounded mt-4"
           onClick={realizarPagamento}
         >
-          Realizar Pagamento
+          Pagar
         </button>
+
+        {mostrarDetalhes && pedidoSelecionado && (
+          <DetalhesPedido pedidoSelecionado={pedidoSelecionado} fecharDetalhesPedido={fecharDetalhesPedido} />
+        )}
       </div>
-      {pedidoSelecionado && mostrarDetalhes && (
-        <DetalhesPedido pedidoSelecionado={pedidoSelecionado} fecharDetalhesPedido={fecharDetalhesPedido} />
-      )}
     </div>
   );
 };
