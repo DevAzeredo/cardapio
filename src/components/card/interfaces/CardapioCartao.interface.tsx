@@ -11,7 +11,6 @@ export interface InstrucoesPedido {
   instrucoes: string;
 }
 
-
 export interface CardapioCartaoProps {
   item: CardapioItem;
   quantidade: number;
@@ -20,5 +19,5 @@ export interface CardapioCartaoProps {
 }
 export interface CardapioCartaoDetalhesProps {
   item: CardapioItem;
-  observacoes: String;
+  observacoes: string;
 }

@@ -1,13 +1,13 @@
-import { openGraph } from '@/lib/helper';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+
+import { openGraph } from '@/lib/helper';
 
 // !STARTERCONF Change these default meta
 const defaultMeta = {
   title: 'Cardapio Digital',
   siteName: 'Digital Cardapio',
-  description:
-    'Site simples e elegante pra auxiliar restaurantes',
+  description: 'Site simples e elegante pra auxiliar restaurantes',
   /** Without additional '/' on the end, e.g. https://theodorusclarence.com */
   url: 'https://tsnext-tw.thcl.dev',
   type: 'website',

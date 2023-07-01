@@ -1,11 +1,12 @@
-import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
 import React from 'react';
+
+import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
 
 interface PedidoItemProps {
   pedido: Pedido;
-  abrirDetalhesPedido: (order: any) => void;
+  abrirDetalhesPedido: (order: Pedido) => void;
   mostrarValor?: boolean;
-  moverParaProximoStatus?: (orderId: String) => void;
+  moverParaProximoStatus?: (orderId: string) => void;
 }
 
 const PedidoItem: React.FC<PedidoItemProps> = ({
@@ -25,47 +26,50 @@ const PedidoItem: React.FC<PedidoItemProps> = ({
     statusText = 'Enviado';
   }
   return (
-    <li key={pedido.id} className="border p-2 mb-2 flex flex-col">
+    <li key={pedido.id} className='mb-2 flex flex-col border p-2'>
       <div>
         <p>{pedido.numero}</p>
         <p>Itens: {pedido.items.map((item) => item.nome).join(', ')}</p>
         {pedido.instrucoesEspeciais && (
-          <div className="flex items-center mt-2">
+          <div className='mt-2 flex items-center'>
             <svg
-              className="w-4 h-4 text-red-500 mr-1"
-              fill="currentColor"
-              viewBox="0 0 20 20"
+              className='mr-1 h-4 w-4 text-red-500'
+              fill='currentColor'
+              viewBox='0 0 20 20'
             >
               <path
-                fillRule="evenodd"
-                d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-6a2 2 0 110-4 2 2 0 010 4zm0-3a1 1 0 100-2 1 1 0 000 2z"
-                clipRule="evenodd"
+                fillRule='evenodd'
+                d='M10 18a8 8 0 100-16 8 8 0 000 16zm0-6a2 2 0 110-4 2 2 0 010 4zm0-3a1 1 0 100-2 1 1 0 000 2z'
+                clipRule='evenodd'
               />
             </svg>
-            <p className="text-red-500">Instruções Especiais</p>
+            <p className='text-red-500'>Instruções Especiais</p>
           </div>
         )}
       </div>
-      <div className="flex items-center">
+      <div className='flex items-center'>
         <button
-          className="mt-2 py-1 px-2 rounded mb-2"
+          className='mb-2 mt-2 rounded px-2 py-1'
           onClick={() => abrirDetalhesPedido(pedido)}
         >
           Detalhes
         </button>
         {moverParaProximoStatus && (
           <button
-            className=" font-semibold py-1 px-2 rounded ml-2"
+            className=' ml-2 rounded px-2 py-1 font-semibold'
             onClick={() => moverParaProximoStatus(pedido.id)}
           >
             {statusText}
-          </button>)
-        }
+          </button>
+        )}
         {mostrarValor && (
-          <span className="text-lg font-semibold ml-auto">
-            R${pedido.items.reduce((total, item) => total + item.valor, 0).toFixed(2)}
-          </span>)
-        }
+          <span className='ml-auto text-lg font-semibold'>
+            R$
+            {pedido.items
+              .reduce((total, item) => total + item.valor, 0)
+              .toFixed(2)}
+          </span>
+        )}
       </div>
     </li>
   );

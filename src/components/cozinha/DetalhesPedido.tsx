@@ -1,6 +1,7 @@
+import React from 'react';
+
 import { CardapioCartaoDetalhes } from '@/components/card/CardapioDetalhesCartao';
 import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
-import React from 'react';
 
 interface DetalhesPedidoProps {
   pedidoSelecionado: Pedido;
@@ -22,8 +23,8 @@ const getStatusText = (status: Pedido['status']): string => {
 // Método para mapear os itens do pedido
 const renderItems = (pedidoSelecionado: Pedido) => {
   return pedidoSelecionado.items.map((item) => (
-    <div key={item.id} className="mb-2 w-full">
-      <div className="h-50">
+    <div key={item.id} className='mb-2 w-full'>
+      <div className='h-50'>
         <CardapioCartaoDetalhes
           key={item.id}
           item={item}
@@ -39,22 +40,24 @@ const DetalhesPedido: React.FC<DetalhesPedidoProps> = ({
   fecharDetalhesPedido,
 }) => {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 bg-blur">
-      <div className="bg-white p-8 max-w-md mx-auto rounded">
-        <div className="flex flex-col h-64 w-96 overflow-y-scroll">
+    <div className='bg-blur fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'>
+      <div className='mx-auto max-w-md rounded bg-white p-8'>
+        <div className='flex h-64 w-96 flex-col overflow-y-scroll'>
           {renderItems(pedidoSelecionado)}
         </div>
-        <div className="ml-4">
-          <h3 className="text-lg font-semibold mb-2">Detalhes do Pedido</h3>
-          <p className="mb-2">
-            <span className="font-semibold">Número:</span> {pedidoSelecionado.numero}
+        <div className='ml-4'>
+          <h3 className='mb-2 text-lg font-semibold'>Detalhes do Pedido</h3>
+          <p className='mb-2'>
+            <span className='font-semibold'>Número:</span>{' '}
+            {pedidoSelecionado.numero}
           </p>
-          <p className="mb-2">
-            <span className="font-semibold">Status: </span> {getStatusText(pedidoSelecionado.status)}
+          <p className='mb-2'>
+            <span className='font-semibold'>Status: </span>{' '}
+            {getStatusText(pedidoSelecionado.status)}
           </p>
-          <div className="mt-4">
+          <div className='mt-4'>
             <button
-              className="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-3 rounded"
+              className='rounded bg-red-500 px-3 py-2 font-semibold text-white hover:bg-red-600'
               onClick={fecharDetalhesPedido}
             >
               Fechar

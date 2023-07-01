@@ -1,4 +1,4 @@
-import { CardapioItem } from "@/components/card/interfaces/CardapioCartao.interface";
+import { CardapioItem } from '@/components/card/interfaces/CardapioCartao.interface';
 
 export interface Pedido {
   id: string;
