@@ -7,30 +7,38 @@ export const CardapioCartao: React.FC<CardapioCartaoProps> = ({
   onDecrementar,
 }) => {
   return (
-    <div className="flex border p-4 mb-4 max-w-md">
-      <div className="mr-4">
-        <img src={item.imagem} alt={item.nome} className="w-50 h-40 object-cover rounded-md" />
+    <div className='mb-4 flex max-w-md border p-4'>
+      <div className='mr-4'>
+        <img
+          src={item.imagem}
+          alt={item.nome}
+          className='w-50 h-40 rounded-md object-cover'
+        />
       </div>
-      <div className="flex flex-col justify-between flex-grow">
-        <div className="mb-auto">
-          <h3 className="text-lg font-semibold">{item.nome}</h3>
-          <p className="text-sm break-words" style={{ maxHeight: '5rem' }}>
+      <div className='flex flex-grow flex-col justify-between'>
+        <div className='mb-auto'>
+          <h3 className='text-lg font-semibold'>{item.nome}</h3>
+          <p className='break-words text-sm' style={{ maxHeight: '5rem' }}>
             {item.descricao}
           </p>
         </div>
-        <div className="flex items-center justify-between">
-          <span className="text-lg font-semibold mr-2">R${item.valor.toFixed(2)}</span>
+        <div className='flex items-center justify-between'>
+          <span className='mr-2 text-lg font-semibold'>
+            R${item.valor.toFixed(2)}
+          </span>
           {quantidade > 0 ? (
-            <div className="flex items-center">
+            <div className='flex items-center'>
               <button
-                className="bg-gray-200 text-gray-700 py-1 px-2 rounded-l"
+                className='rounded-l bg-gray-200 px-2 py-1 text-gray-700'
                 onClick={onDecrementar}
               >
                 -
               </button>
-              <span className="bg-gray-200 text-gray-700 py-1 px-2">{quantidade}</span>
+              <span className='bg-gray-200 px-2 py-1 text-gray-700'>
+                {quantidade}
+              </span>
               <button
-                className="bg-gray-200 text-gray-700 py-1 px-2 rounded-r"
+                className='rounded-r bg-gray-200 px-2 py-1 text-gray-700'
                 onClick={onIncrementar}
               >
                 +
@@ -38,7 +46,7 @@ export const CardapioCartao: React.FC<CardapioCartaoProps> = ({
             </div>
           ) : (
             <button
-              className="bg-gray-200 text-gray-700 py-1 px-2 rounded"
+              className='rounded bg-gray-200 px-2 py-1 text-gray-700'
               onClick={onIncrementar}
             >
               Adicionar

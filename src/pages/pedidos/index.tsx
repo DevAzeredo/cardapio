@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import Link from 'next/link';
+import { useState } from 'react';
 
 import DetalhesPedido from '@/components/cozinha/DetalhesPedido';
 import { Pedido } from '@/components/cozinha/interfaces/Pedido.interface';
 import PedidoItem from '@/components/cozinha/PedidoItem';
 
-const PedidoListagem: React.FC = () => {
+const VisaoGeralPedidos = () => {
+  const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(
+    null
+  );
   const [mostrarDetalhes, setMostrarDetalhes] = useState(false);
   const abrirDetalhesPedido = (pedido: Pedido) => {
     setPedidoSelecionado(pedido);
@@ -14,7 +18,7 @@ const PedidoListagem: React.FC = () => {
     setMostrarDetalhes(false);
   };
 
-  const [pedidos, setPedidos] = useState<Pedido[]>([
+  const [orders] = useState<Pedido[]>([
     {
       id: '1',
       numero: 'ORD001',
@@ -91,109 +95,105 @@ const PedidoListagem: React.FC = () => {
       instrucoesEspeciais: 'Sem cebola',
     },
   ]);
+  const [gorjeta, setGorjeta] = useState<number>(0);
+  const [total] = useState<number>(() => {
+    const initialValue = 0;
+    const totalValor = orders.reduce((accumulator, order) => {
+      return (
+        accumulator +
+        order.items.reduce((itemAccumulator, item) => {
+          return itemAccumulator + item.valor;
+        }, 0)
+      );
+    }, initialValue);
+    return totalValor;
+  });
 
-  const [pedidoSelecionado, setPedidoSelecionado] = useState<Pedido | null>(
-    null
-  );
-
-  const moverParaEmPreparo = (orderId: string) => {
-    setPedidos((prevPedidos) =>
-      prevPedidos.map((pedido) =>
-        pedido.id === orderId ? { ...pedido, status: 2 } : pedido
-      )
-    );
+  const calcularTotal = () => {
+    const gorjetaValor = total * (gorjeta / 100);
+    return total + gorjetaValor;
   };
 
-  const moverParaPronto = (orderId: string) => {
-    setPedidos((prevPedidos) =>
-      prevPedidos.map((pedido) =>
-        pedido.id === orderId ? { ...pedido, status: 3 } : pedido
-      )
-    );
+  const realizarPagamento = () => {
+    // Lógica para fazer o request ao servidor e obter o QR Code e os dados da transação
   };
-
-  const moverParaEnviado = (orderId: string) => {
-    setPedidos((prevPedidos) =>
-      prevPedidos.map((pedido) =>
-        pedido.id === orderId ? { ...pedido, status: 4 } : pedido
-      )
-    );
-  };
-
-  const rowPendente = pedidos.filter((pedido) => pedido.status === 1);
-  const rowEmPreparo = pedidos.filter((pedido) => pedido.status === 2);
-  const rowPronto = pedidos.filter((pedido) => pedido.status === 3);
-  const rowEnviado = pedidos.filter((pedido) => pedido.status === 4);
 
   return (
-    <div className='mt-4 flex justify-center'>
-      <div className='w-full max-w-screen-lg'>
-        <div className='rounded border p-8'>
-          <h3 className='mb-2 text-lg font-semibold'>Pendente</h3>
-          <ul>
-            {rowPendente.map((pedido) => (
-              <PedidoItem
-                key={pedido.id}
-                pedido={pedido}
-                abrirDetalhesPedido={abrirDetalhesPedido}
-                moverParaProximoStatus={moverParaEmPreparo}
-              />
-            ))}
-          </ul>
-        </div>
+    <div className='flex h-screen items-center justify-center'>
+      <div className='container mx-auto flex h-screen flex-col items-center justify-center p-4'>
+        <h2 className='mb-4 text-2xl font-bold'>Pedidos</h2>
 
-        <div className='rounded border p-8'>
-          <h3 className='mb-2 text-lg font-semibold'>Em Preparo</h3>
-          <ul>
-            {rowEmPreparo.map((pedido) => (
-              <PedidoItem
-                key={pedido.id}
-                pedido={pedido}
-                abrirDetalhesPedido={abrirDetalhesPedido}
-                moverParaProximoStatus={moverParaPronto}
-              />
-            ))}
-          </ul>
-        </div>
+        {orders.length > 0 ? (
+          <div>
+            <div className='w-96 rounded border p-8'>
+              <ul>
+                {orders.map((order) => (
+                  <PedidoItem
+                    key={order.id}
+                    pedido={order}
+                    abrirDetalhesPedido={abrirDetalhesPedido}
+                    mostrarValor={true}
+                  />
+                ))}
+              </ul>
+              <div className='flex justify-center'>
+                <Link
+                  className='mb-4 mt-2 rounded bg-gray-200 px-4 py-2 font-semibold text-gray-700'
+                  id='cardapio'
+                  href='/cardapio'
+                >
+                  Novo Pedido
+                </Link>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <p>Nenhum pedido anterior encontrado.</p>
+        )}
 
-        <div className='rounded border p-8'>
-          <h3 className='mb-2 text-lg font-semibold'>Pronto</h3>
-          <ul>
-            {rowPronto.map((pedido) => (
-              <PedidoItem
-                key={pedido.id}
-                pedido={pedido}
-                abrirDetalhesPedido={abrirDetalhesPedido}
-                moverParaProximoStatus={moverParaEnviado}
-              />
-            ))}
-          </ul>
+        <div className='flex flex-col items-center'>
+          <div>
+            <span>Gorjeta</span>
+          </div>
+          <div className='mx-auto flex w-72 justify-center'>
+            <input
+              type='range'
+              min={0}
+              max={100}
+              value={gorjeta}
+              onChange={(e) => setGorjeta(Number(e.target.value))}
+              className='ml-6 w-full'
+            />
+            <div className='w-1/4'>
+              <span className='text-gray-600'>{gorjeta}%</span>
+            </div>
+          </div>
         </div>
-
-        <div className='rounded border p-8 opacity-50'>
-          <h3 className='mb-2 text-lg font-semibold'>Pedidos Enviados</h3>
-          <ul>
-            {rowEnviado.map((pedido) => (
-              <PedidoItem
-                key={pedido.id}
-                pedido={pedido}
-                abrirDetalhesPedido={abrirDetalhesPedido}
-                moverParaProximoStatus={moverParaEnviado}
-                mostrarValor={false}
-              />
-            ))}
-          </ul>
+        <div className='flex justify-center'>
+          <div className='w-1/2'>
+            <input
+              type='text'
+              value={`R$ ${calcularTotal().toFixed(2)}`}
+              className='w-full rounded border border-gray-400 px-2 py-2'
+              disabled
+            />
+          </div>
+          <button
+            className='ml-2 rounded px-4 py-2 font-bold'
+            onClick={realizarPagamento}
+          >
+            Pagar
+          </button>
         </div>
+        {mostrarDetalhes && pedidoSelecionado && (
+          <DetalhesPedido
+            pedidoSelecionado={pedidoSelecionado}
+            fecharDetalhesPedido={fecharDetalhesPedido}
+          />
+        )}
       </div>
-
-      {pedidoSelecionado && mostrarDetalhes && (
-        <DetalhesPedido
-          pedidoSelecionado={pedidoSelecionado}
-          fecharDetalhesPedido={fecharDetalhesPedido}
-        />
-      )}
     </div>
   );
 };
 
-export default PedidoListagem;
+export default VisaoGeralPedidos;
