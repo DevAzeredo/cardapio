@@ -1,5 +1,3 @@
-import Image from 'next/image';
-
 import { CardapioCartaoProps } from './interfaces/CardapioCartao.interface';
 
 export const CardapioCartao: React.FC<CardapioCartaoProps> = ({
@@ -11,7 +9,7 @@ export const CardapioCartao: React.FC<CardapioCartaoProps> = ({
   return (
     <div className='mb-4 flex max-w-md border p-4'>
       <div className='mr-4'>
-        <Image
+        <img
           src={item.imagem}
           alt={item.nome}
           className='w-50 h-40 rounded-md object-cover'

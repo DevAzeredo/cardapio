@@ -1,7 +1,7 @@
-import Image from 'next/image';
 import React from 'react';
 
 import { CardapioCartaoDetalhesProps } from './interfaces/CardapioCartao.interface';
+
 export const CardapioCartaoDetalhes: React.FC<CardapioCartaoDetalhesProps> = ({
   item,
 }) => {
@@ -9,7 +9,7 @@ export const CardapioCartaoDetalhes: React.FC<CardapioCartaoDetalhesProps> = ({
     <div className='flex flex-grow flex-col border p-4'>
       <div className='mb-4 flex max-w-md'>
         <div className='mr-4'>
-          <Image
+          <img
             src={item.imagem}
             alt={item.nome}
             className='w-50 h-40 rounded-md object-cover'
